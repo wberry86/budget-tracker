@@ -9,7 +9,7 @@ request.onupgradeneeded = function(event) {
     // save a reerence to the database
     const db = event.target.result;
     // create object store (table) called 'new_budget', set to auto increment
-    db.createObjectStore('new_transaction', { autoIncrement: true});
+    db.createObjectStore('new_budget', { autoIncrement: true });
 };
 
 // upon success
@@ -19,7 +19,7 @@ request.onsuccess = function(event) {
 
     //check if app is ononline, if yes run uploadBudget()
     if (navigator.online) {
-        uploadTransaction();
+        uploadBudget();
     }
 };
 
@@ -31,24 +31,24 @@ request.onerror = function(event) {
 // this function will execute if attempt to submit budget with no internet connection
 function saveRecord(record) {
     // open new transaction with the database with read and write permission
-    const transaction = db.transaction(['new_transaction'], 'readwrite');
+    const transaction = db.transaction(['new_budget'], 'readwrite');
 
     // access object store for 'new_budget'
-    const transactionObjectStore = transaction.objectStore('new_transaction');
+    const budgetObjectStore = transaction.objectStore('new_budget');
 
     // add record to store with add method
-    transactionObjectStore.add(record);
+    budgetObjectStore.add(record);
 }
 
-function uploadTransaction() {
+function uploadBudget() {
     // open transaction on db
-    const transaction = db.transaction(['new_transaction'], 'readwrite');
+    const transaction = db.transaction(['new_budget'], 'readwrite');
 
     // access object store
-    const transactionObjectStore = transaction.objectStore('new_transaction');
+    const budgetObjectStore = transaction.objectStore('new_budget');
 
     // get all records from store and set to variable
-    const getAll = transactionObjectStore.getAll();
+    const getAll = budgetObjectStore.getAll();
 
     // after sucess getAll
     getAll.onsuccess = function() {
@@ -70,11 +70,11 @@ function uploadTransaction() {
                     throw new Error(serverResponse);
                 }
                 // open one more transaction
-                const transaction = db.transaction(['new_transaction'], 'readwrite');
+                const transaction = db.transaction(['new_budget'], 'readwrite');
                 // access new_budget object store
-                const transactionObjectStore = transaction.objectStore('new_transaction');
+                const budgetObjectStore = transaction.objectStore('new_budget');
                 // clear all items in store
-                transactionObjectStore.clear();
+                budgetObjectStore.clear();
 
                 alert('All saved transactions have been submitted!');
             })
@@ -83,9 +83,11 @@ function uploadTransaction() {
             })
         }
     }
-    // why is this not working??
-// listen for app to come back online
-window.addEventListener('online', uploadtransaction);
+   
 
 };
+
+ // why is this not working??
+// listen for app to come back online
+window.addEventListener('online', uploadBudget);
 
