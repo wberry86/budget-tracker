@@ -29,6 +29,7 @@
   Below are links to my Github page and email in case you would like to contact me or have any further questions.
 
   ## Screenshot
+  ![Budget Tracker Screenshot](https://github.com/wberry86/budget-tracker/blob/main/assets/images/Capture.PNG)
 
   ## Link
   [Link to Website](https://young-lake-51772.herokuapp.com/)
